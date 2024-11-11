@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+
+{% block title %}TentangKami{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="d-flex align-items-center" style="height: 80vh">
+  <!-- Banner TentangKami -->
+  <img
+    src="{% if tentangkami.banner_TentangKami %}{{ tentangkami.banner_TentangKami.url }}{% else %}{% static 'images/BannerDefault.png' %}{% endif %}"
+    alt="Banner Tentang Kami"
+    style="width: 100%; height: 100%; object-fit: cover"
+  />
+</div>
+
+<div class="container-fluid" style="padding: 40px">
+  <div class="d-flex justify-content-center align-items-center">
+    <div style="margin-right: 40px">
+      <div style="color: rgb(25, 19, 19); font-size: 32px; font-weight: bold">
+        <!-- Title TentangKami -->
+        <p>
+          {{ tentangkami.title_TentangKami|default:"Belum ada teks untuk judul" }}
+        </p>
+      </div>
+      <div style="color: rgb(0, 0, 0); font-size: 18px; text-align: justify">
+        <!-- Deskripsi TentangKami -->
+        <p>
+          {{ tentangkami.deskripsi_TentangKami|default:"Belum ada deskripsi yang tersedia saat ini." }}
+        </p>
+      </div>
+      <!-- Gambar TentangKami -->
+    </div>
+    <img
+      src="{% if tentangkami.gambar_TentangKami %}{{ tentangkami.gambar_TentangKami.url }}{% else %}{% static 'images/default.png' %}{% endif %}"
+      alt="Gambar1"
+      style="width: 620px; height: 380px; object-fit: cover; border-radius: 10px;"
+    />
+  </div>
+
+  <div style="width: 100%; height: 180px; background-color: #eeeeee; text-align: center; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 40px; padding-left: 50px; padding-right: 50px;">
+    <p style="font-weight: bold; font-size: 32px">
+      {{ tentangkami.title_VisiMisi|default:"Belum ada teks untuk judul" }}
+    </p>
+    <p style="font-size: 18px">
+      {{ tentangkami.deskripsi_VisiMisi|default:"Belum ada isi" }}
+    </p>
+  </div>
+
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <p style="color: rgb(25, 19, 19); font-size: 32px; font-weight: bold; padding-top: 40px;">
+      {{ tentangkami.title_tim|default:"Belum ada teks untuk judul" }}
+    </p>
+  </div>
+
+  <!-- List Tim -->
+  {% if tentangkami.tim.exists %}
+  <div class="container-fluid" style="width: 100%">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-center">
+      {% for anggota in tentangkami.tim.all %}
+      <div class="col mb-4" style="position: relative; width: 400px; height: 500px">
+        <img
+          src="{% if anggota.gambar_tim %}{{ anggota.gambar_tim.url }}{% else %}{% static 'images/default.png' %}{% endif %}"
+          alt="{{ anggota.nama_tim }}"
+          style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; border: 1.5px solid #000000;"
+        />
+
+        <!-- Overlay text container -->
+        <div style="position: absolute; bottom: 0; width: 376px; height: 120px; background: rgba(0, 0, 0, 0.6); color: white; padding: 10px; text-align: center; border-radius: 0 0 10px 10px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+          <h5 style="margin: 0; font-size: 24px">{{ anggota.nama_tim }}</h5>
+          <p style="margin: 0; font-size: 18px">
+            {{ anggota.jabatan_tim|default:"Jabatan belum tersedia" }}
+          </p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <p style="font-size: 18px; color: #999999; text-align: center; margin-top: 20px;">
+    Belum ada anggota tim.
+  </p>
+  {% endif %}
+</div>
+
+{% endblock %}

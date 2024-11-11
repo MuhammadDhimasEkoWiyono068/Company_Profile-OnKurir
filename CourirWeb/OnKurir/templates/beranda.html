@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+{% block title %} Beranda {% endblock %}
+{% block content %}
+{% load static %}
+<div class="d-flex align-items-center" style="height: 80vh;">
+    <!-- Banner Beranda -->
+    <img src="{% if beranda.banner_beranda %}{{ beranda.banner_beranda.url }}{% else %}{% static 'images/BannerDefault.png' %}{% endif %}" 
+         alt="Banner Beranda" 
+         style="width: 100%; height: 100%; object-fit: cover;">
+</div>
+<div class="container-fluid" style="padding: 40px;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div style="margin-right: 40px;">
+            <div style="color: rgb(25, 19, 19); font-size: 32px; font-weight: bold;">
+                <!-- Title Beranda -->
+                <p>{{ beranda.title_beranda|default:"Belum ada teks untuk judul" }}</p>
+            </div>
+            <div style="color: rgb(0, 0, 0); font-size: 18px; text-align: justify;">
+                <!-- Deskripsi Beranda -->
+                <p>{{ beranda.deskripsi_beranda|default:"Belum ada deskripsi yang tersedia saat ini." }}</p>
+            </div>
+            <!-- <a href="{% url 'tentangkami' %}" class="btn mt-4" style="background-color: #00ADB5; color: #ffffff;">Pelajari Lebih Lanjut</a> -->
+            <a href="{% url 'tentangkami' %}" 
+                class="btn mt-4" 
+                style="background-color: #00ADB5; color: #ffffff; transition: background-color 0.3s ease, color 0.3s ease;" 
+                onmouseover="this.style.backgroundColor='#008a91'; this.style.color='#e0f7fa';" 
+                onmouseout="this.style.backgroundColor='#00ADB5'; this.style.color='#ffffff';" 
+                onmousedown="this.style.backgroundColor='#006f75'; this.style.color='#b2ebf2';" 
+                onmouseup="this.style.backgroundColor='#008a91'; this.style.color='#e0f7fa';">
+                Pelajari Lebih Lanjut
+            </a>
+        </div>
+        <!-- Gambar Beranda -->
+        <img src="{% if beranda.gambar_beranda %}{{ beranda.gambar_beranda.url }}{% else %}{% static 'images/default.png' %}{% endif %}" 
+             alt="Gambar1" 
+             style="width: 620px; height: 380px; object-fit: cover; border-radius: 10px;">
+    </div>
+
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <p style="color: rgb(25, 19, 19); font-size: 32px; font-weight: bold; padding-top: 40px;">{{ beranda.title_keunggulan|default:"Belum ada teks untuk judul" }}</p>
+    </div>
+    <!-- List Keunggulan -->
+    {% if beranda.keunggulan.exists %}
+        {% for keunggulan in beranda.keunggulan.all %}
+            <div style="margin-top: 10px; padding-right: 50px; padding-left: 50px; width: 100%; height: 150px; background-color: #EEEEEE; text-align: center; border-radius: 10px; display: flex; justify-content: start; align-items: center;">
+                <img src="{% if keunggulan.gambar_keunggulan %}{{ keunggulan.gambar_keunggulan.url }}{% else %}{% static 'images/default.png' %}{% endif %}" 
+                     alt="{{ keunggulan.title }}" 
+                     style="margin-right: 50px; width: 100px; height: 100px; object-fit: cover; border-radius: 10px; border: 1.5px solid #000000;">
+                <div style="text-align: left;">
+                    <strong style="font-size: 24px; color: #00ADB5;">{{ keunggulan.title_Isikeunggulan }}</strong>
+                    <p style="font-size: 18px; text-align: justify;">{{ keunggulan.deskripsi_keunggulan|default:"Deskripsi belum tersedia." }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p style="font-size: 18px; color: #999999; text-align: center; margin-top: 20px;">Belum ada keunggulan yang tersedia.</p>
+    {% endif %}
+    </div>
+</div>
+{% endblock %}
