@@ -1,0 +1,240 @@
+{% extends 'layout.html' %}
+
+{% block title %}Layanan{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<!-- Menambahkan overflow-x: hidden untuk mencegah horizontal scrolling -->
+<style>
+    body, html {
+        overflow-x: hidden; /* Menghindari scroll horizontal */
+    }
+
+    img {
+        max-width: 100%; /* Menjamin gambar responsif */
+        height: auto;    /* Menjaga rasio gambar */
+    }
+
+    .layanan-item {
+        width: 100%; /* Pastikan lebar elemen sesuai dengan lebar kontainer */
+        max-width: 360px; /* Membatasi lebar maksimum elemen */
+        margin: 0; /* Menghilangkan margin yang tidak perlu */
+        padding: 0; /* Menghilangkan padding yang tidak perlu */
+    }
+
+    /* Pastikan kontainer layanan memiliki padding yang sesuai */
+    .row {
+        padding: 0 15px; /* Memberikan sedikit ruang untuk elemen di dalamnya */
+    }
+
+    /* Menjamin agar kolom-kolom tidak melebihi lebar layar */
+    .layanan-item img {
+        width: 100%; /* Gambar akan menyesuaikan lebar kontainer */
+        height: auto; /* Menjaga proporsi gambar */
+    }
+
+    .layanan-item.selected {
+        box-shadow: 6px 6px 4px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .layanan-item:hover {
+        box-shadow: 6px 6px 4px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <p style="color: rgb(25, 19, 19); font-size: 32px; font-weight: bold; margin-top: 50px; margin-bottom: 40px;">
+        {{ layanan.title_layanan|default:"Belum ada teks untuk judul" }}
+    </p>
+</div>
+
+<!-- List Isi Layanan -->
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 justify-content-center" 
+     style="display: flex; flex-wrap: wrap; gap: 70px;">
+    {% if layanan.isi_layanan.exists %}
+        {% for isi in layanan.isi_layanan.all %}
+        <div class="col mb-4 layanan-item" 
+             data-jenis-layanan="{{ isi.Jenis_layanan }}" 
+             data-proses-pengiriman="{{ isi.proses_pengiriman }}"
+             data-kebijakan-ketentuan="{{ isi.kebijakan_ketentuan }}"
+             style="border-radius: 10px; cursor: pointer; border: 1.5px solid #000000;">
+            <img src="{% if isi.gambar_layanan %}{{ isi.gambar_layanan.url }}{% else %}{% static 'images/default.png' %}{% endif %}"
+                alt="{{ isi.Jenis_layanan }}" 
+                style="width: 100%; height: 300px; object-fit: cover; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                
+            <div style="width: 100%; height: 150px; background-color: #eeeeee; padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                <p style="font-size: 20px; font-weight: bold; margin-bottom: 5px; text-align: center; color: #00ADB5;">
+                    {{ isi.Jenis_layanan }}
+                </p>
+                <p style="font-size: 14px; text-align: justify;">
+                    {{ isi.deskripsi_layanan }}
+                </p>
+            </div>
+                
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <p style="font-size: 18px; color: #999999; text-align: center; margin-top: 20px;">
+                Belum ada layanan yang tersedia.
+            </p>
+        </div>
+    {% endif %}
+</div>
+
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <p id="title-carakerja" style="color: rgb(25, 19, 19); font-size: 32px; font-weight: bold; margin-top: 100px; margin-bottom: 40px;">
+        {{ layanan.title_carakerja|default:"Belum ada teks untuk judul" }}
+    </p>
+</div>
+
+
+<div class="container-fluid" style="padding: 40px;">
+    <!-- List Proses Pengiriman -->
+    <div id="dropdown(ProsesPengiriman)" style="width: 100%; height: 50px; background-color: #eeeeee; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding: 20px;">
+        <p style="margin: 0; font-size: 18px; font-weight: bold;">
+            {{ layanan.title_ProsesPengiriman|default:"Belum ada teks" }}
+        </p>
+        <!-- Ikon Dropdown -->
+        <i id="dropdown-icon" class="fa-solid fa-angle-down" style="font-size: 20px;"></i>
+    </div>
+    <div id="proses-pengiriman" style="padding: 10px; margin-top: 10px; border-radius: 5px; text-align: left; font-size: 18px;">
+        <!-- List Proses Pengiriman akan muncul disini -->
+    </div>
+    
+    <!-- List Kebijakan Ketentuan -->
+    <div id="dropdown(KebijakanKetentuan)" style="width: 100%; height: 50px; background-color: #eeeeee; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding: 20px; margin-top: 30px;">
+        <p style="margin: 0; font-size: 18px; font-weight: bold;">
+            {{ layanan.title_KebijakanKetentuan|default:"Belum ada teks" }}
+        </p>
+        <!-- Ikon Dropdown -->
+        <i id="dropdown-icon-kebijakan" class="fa-solid fa-angle-down" style="font-size: 20px;"></i>
+    </div>
+    <div id="kebijakan-ketentuan" style="padding: 10px; margin-top: 10px; border-radius: 5px; text-align: left; font-size: 18px;">
+        <!-- List Kebijakan Ketentuan akan muncul disini -->
+    </div>
+</div>
+
+
+<!-- JavaScript untuk mengubah teks -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const titleCarakerja = document.getElementById('title-carakerja');
+    const layananItems = document.querySelectorAll('.layanan-item');
+    const prosesPengiriman = document.getElementById('proses-pengiriman');
+    const kebijakanKetentuan = document.getElementById('kebijakan-ketentuan');
+
+    // Simulasikan klik pada elemen pertama
+    if (layananItems.length > 0) {
+        const firstItem = layananItems[0];
+        const jenisLayanan = firstItem.getAttribute('data-jenis-layanan');
+        const prosesPengirimanText = firstItem.getAttribute('data-proses-pengiriman');
+        const kebijakanKetentuanText = firstItem.getAttribute('data-kebijakan-ketentuan');
+
+        titleCarakerja.textContent = `{{ layanan.title_carakerja|default:"Belum ada teks untuk judul" }} ${jenisLayanan}`;
+        firstItem.classList.add('selected');
+        updateProsesPengiriman(prosesPengirimanText);
+        updateKebijakanKetentuan(kebijakanKetentuanText);
+    }
+
+    layananItems.forEach(item => {
+        item.addEventListener('click', function () {
+            // Reset semua elemen
+            layananItems.forEach(i => {
+                i.classList.remove('selected');
+            });
+
+            // Perbarui elemen yang diklik
+            const jenisLayanan = this.getAttribute('data-jenis-layanan');
+            const prosesPengirimanText = this.getAttribute('data-proses-pengiriman');
+            const kebijakanKetentuanText = this.getAttribute('data-kebijakan-ketentuan');
+            
+            titleCarakerja.textContent = `{{ layanan.title_carakerja|default:"Belum ada teks untuk judul" }} ${jenisLayanan}`;
+            this.classList.add('selected');
+            updateProsesPengiriman(prosesPengirimanText);
+            updateKebijakanKetentuan(kebijakanKetentuanText);
+            });
+        });
+    });
+
+    function updateProsesPengiriman(prosesPengirimanText) {
+        const prosesPengiriman = document.getElementById('proses-pengiriman');
+
+        // Pisahkan teks berdasarkan baris baru dan buat elemen list
+        const lines = prosesPengirimanText.split('\n');
+        prosesPengiriman.innerHTML = ''; // Kosongkan konten lama
+        const ol = document.createElement('ol'); // Membuat elemen <ol> untuk list terurut
+
+        // Tambahkan tiap baris sebagai item <li>
+        lines.forEach(line => {
+            const li = document.createElement('li');
+            li.textContent = line.trim(); // Menambahkan teks ke dalam <li>
+            ol.appendChild(li);
+        });
+
+        // Menampilkan list yang telah diubah
+        prosesPengiriman.appendChild(ol);
+    }
+
+    function updateKebijakanKetentuan(kebijakanKetentuanText) {
+        const kebijakanKetentuan = document.getElementById('kebijakan-ketentuan');
+
+        // Pisahkan teks berdasarkan baris baru dan buat elemen list
+        const lines = kebijakanKetentuanText.split('\n');
+        kebijakanKetentuan.innerHTML = ''; // Kosongkan konten lama
+        const ol = document.createElement('ol'); // Membuat elemen <ol> untuk list terurut
+
+        // Tambahkan tiap baris sebagai item <li>
+        lines.forEach(line => {
+            const li = document.createElement('li');
+            li.textContent = line.trim(); // Menambahkan teks ke dalam <li>
+            ol.appendChild(li);
+        });
+
+        // Menampilkan list yang telah diubah
+        kebijakanKetentuan.appendChild(ol);
+    }
+
+    // Menangani event klik untuk toggle visibility pada Proses Pengiriman
+    document.getElementById('dropdown(ProsesPengiriman)').addEventListener('click', function() {
+        const prosesPengiriman = document.getElementById('proses-pengiriman');
+        const icon = document.getElementById('dropdown-icon');
+        
+        // Toggle visibility of extra text
+        if (prosesPengiriman.style.display === 'none') {
+            prosesPengiriman.style.display = 'block';
+            // Ganti ikon ke atas (panah atas) saat dropdown terbuka
+            icon.classList.remove('fa-angle-down');
+            icon.classList.add('fa-angle-up');
+        } else {
+            prosesPengiriman.style.display = 'none';
+            // Ganti ikon ke bawah (panah bawah) saat dropdown tertutup
+            icon.classList.remove('fa-angle-up');
+            icon.classList.add('fa-angle-down');
+        }
+    });
+
+    // Menangani event klik untuk toggle visibility pada kebijakan ketentuan
+    document.getElementById('dropdown(KebijakanKetentuan)').addEventListener('click', function() {
+        const kebijakanKetentuan = document.getElementById('kebijakan-ketentuan');
+        const icon = document.getElementById('dropdown-icon-kebijakan');
+        
+        // Toggle visibility of extra text
+        if (kebijakanKetentuan.style.display === 'none') {
+            kebijakanKetentuan.style.display = 'block';
+            // Ganti ikon ke atas (panah atas) saat dropdown terbuka
+            icon.classList.remove('fa-angle-down');
+            icon.classList.add('fa-angle-up');
+        } else {
+            kebijakanKetentuan.style.display = 'none';
+            // Ganti ikon ke bawah (panah bawah) saat dropdown tertutup
+            icon.classList.remove('fa-angle-up');
+            icon.classList.add('fa-angle-down');
+        }
+    });
+
+</script>
+
+
+{% endblock %}

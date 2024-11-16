@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+
+{% block title %}Galeri{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <p style="color: rgb(25, 19, 19); font-size: 32px; font-weight: bold; margin-top: 50px; margin-bottom: 50px;">
+        {{ galeri.title_Galeri|default:"Belum ada teks untuk judul" }}
+    </p>
+</div>
+
+<!-- CSS untuk mengubah warna pagination -->
+<style>
+  /* Mengubah warna teks pagination */
+  .custom-pagination .page-item .page-link {
+    color: #00ADB5; /* Warna teks tombol pagination */
+    background-color: #ffffff; /* Warna latar belakang tombol */
+    border-color: #00ADB5; /* Warna border tombol */
+  }
+
+  .custom-pagination .page-item.active .page-link {
+    background-color: #00ADB5; /* Warna latar belakang untuk tombol aktif */
+    color: #ffffff; /* Warna teks untuk tombol aktif */
+  }
+
+  .custom-pagination .page-item.disabled .page-link {
+    color: #999999; /* Warna teks untuk tombol yang dinonaktifkan */
+    background-color: #f8f9fa; /* Warna latar belakang untuk tombol yang dinonaktifkan */
+    border-color: #ddd; /* Warna border untuk tombol yang dinonaktifkan */
+  }
+</style>
+
+<!-- List Galeri -->
+{% if page_obj.object_list.exists %}
+  <div class="container-fluid" style="width: 100%">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-center" style="display: flex; flex-wrap: wrap; gap: 50px;">
+      {% for gambar in page_obj %}
+      <div class="col mb-4" style="position: relative; width: 400px; height: 400px;">
+        <img
+          src="{% if gambar.gambar_galeri %}{{ gambar.gambar_galeri.url }}{% else %}{% static 'images/default.png' %}{% endif %}"
+          alt="Galeri Image"
+          style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; border: 1.5px solid #000000; box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2);"
+        />
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <nav aria-label="Page navigation example" style="margin-top: 50px; margin-bottom: 50px;">
+    <ul class="pagination justify-content-center custom-pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link"><span aria-hidden="true">&laquo;</span></a>
+        </li>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+          <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+        </li>
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link"><span aria-hidden="true">&raquo;</span></a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% else %}
+  <p style="font-size: 18px; color: #999999; text-align: center; margin-top: 20px;">
+    Belum ada gambar di galeri.
+  </p>
+{% endif %}
+
+{% endblock %}

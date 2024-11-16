@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'OnKurir',
     'django_bootstrap5',
+    'markdownx',
 ]
 
 MIDDLEWARE = [

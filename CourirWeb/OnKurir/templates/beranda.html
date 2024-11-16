@@ -2,24 +2,42 @@
 {% block title %} Beranda {% endblock %}
 {% block content %}
 {% load static %}
-<div class="d-flex align-items-center" style="height: 80vh;">
-    <!-- Banner Beranda -->
-    <img src="{% if beranda.banner_beranda %}{{ beranda.banner_beranda.url }}{% else %}{% static 'images/BannerDefault.png' %}{% endif %}" 
-         alt="Banner Beranda" 
-         style="width: 100%; height: 100%; object-fit: cover;">
+
+<!------------------------------ Banner Slider ------------------------------>
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner" style="width: 100%; height: 650px;">
+        {% for banner in beranda.carousel.all %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{{ banner.banner_beranda.url }}" class="d-block w-100" alt="Carousel Image" style="object-fit: cover; height: 650px;">
+        </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
+
+
+
+<!------------------------------ Isi Beranda ------------------------------>
 <div class="container-fluid" style="padding: 40px;">
-    <div class="d-flex justify-content-center align-items-center">
+    <!------------------------------ Profil ------------------------------>
+    <div class="d-flex justify-content-center align-items-center" style="margin-top: 60px;">
         <div style="margin-right: 40px;">
+            <!-- Title Beranda -->
             <div style="color: rgb(25, 19, 19); font-size: 32px; font-weight: bold;">
-                <!-- Title Beranda -->
                 <p>{{ beranda.title_beranda|default:"Belum ada teks untuk judul" }}</p>
             </div>
+            <!-- Deskripsi Beranda -->
             <div style="color: rgb(0, 0, 0); font-size: 18px; text-align: justify;">
-                <!-- Deskripsi Beranda -->
                 <p>{{ beranda.deskripsi_beranda|default:"Belum ada deskripsi yang tersedia saat ini." }}</p>
             </div>
-            <!-- <a href="{% url 'tentangkami' %}" class="btn mt-4" style="background-color: #00ADB5; color: #ffffff;">Pelajari Lebih Lanjut</a> -->
+            <!-- Button ke tentaang kami -->
             <a href="{% url 'tentangkami' %}" 
                 class="btn mt-4" 
                 style="background-color: #00ADB5; color: #ffffff; transition: background-color 0.3s ease, color 0.3s ease;" 
@@ -36,8 +54,11 @@
              style="width: 620px; height: 380px; object-fit: cover; border-radius: 10px;">
     </div>
 
+
+
+    <!------------------------------ Keunggulan ------------------------------>
     <div class="d-flex flex-column justify-content-center align-items-center">
-        <p style="color: rgb(25, 19, 19); font-size: 32px; font-weight: bold; padding-top: 40px;">{{ beranda.title_keunggulan|default:"Belum ada teks untuk judul" }}</p>
+        <p style="color: rgb(25, 19, 19); font-size: 32px; font-weight: bold; margin-top: 100px; margin-bottom: 30px;">{{ beranda.title_keunggulan|default:"Belum ada teks untuk judul" }}</p>
     </div>
     <!-- List Keunggulan -->
     {% if beranda.keunggulan.exists %}
@@ -54,7 +75,49 @@
         {% endfor %}
     {% else %}
         <p style="font-size: 18px; color: #999999; text-align: center; margin-top: 20px;">Belum ada keunggulan yang tersedia.</p>
-    {% endif %}
+    {% endif %}    
+
+
+
+
+    <!------------------------------ Galeri ------------------------------>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <p style="color: rgb(25, 19, 19); font-size: 32px; font-weight: bold; margin-top: 100px; margin-bottom: 40px;">
+            {{ galeri.title_Galeri|default:"Belum ada teks untuk judul" }}
+        </p>
     </div>
+    <!-- List Gambar -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 justify-content-center" style="display: flex; flex-wrap: wrap; gap: 20px;">
+        {% if gambar_list.exists %}
+            {% for gambar in gambar_list %}
+            <div class="col mb-4" style="position: relative; flex: 1 1 21%; max-width: 360px; height: 360px;">
+                <img src="{% if gambar.gambar_galeri %}{{ gambar.gambar_galeri.url }}{% else %}{% static 'images/default.png' %}{% endif %}" 
+                    alt="Gambar Galeri" 
+                    style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; border: 1.5px solid #000000;">
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <p style="font-size: 18px; color: #999999; text-align: center; margin-top: 20px;">
+                    Belum ada gambar di galeri.
+                </p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Button ke galeri -->
+    <div style="text-align: center;">
+        <a href="{% url 'galeri' %}" 
+            class="btn mt-4" 
+            style="background-color: #EEEEEE; color: #3A4750; transition: background-color 0.3s ease, color 0.3s ease;" 
+            onmouseover="this.style.backgroundColor='#B0B9C3'; this.style.color='#FFFFFF';" 
+            onmouseout="this.style.backgroundColor='#EEEEEE'; this.style.color='#3A4750';" 
+            onmousedown="this.style.backgroundColor='#A0A9B3'; this.style.color='#FFFFFF';" 
+            onmouseup="this.style.backgroundColor='#B0B9C3'; this.style.color='#FFFFFF';">
+            Lihat Selengkapnya
+        </a>
+    </div>
+
+
 </div>
 {% endblock %}

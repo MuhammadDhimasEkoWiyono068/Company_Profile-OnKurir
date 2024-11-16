@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %} - OnKurir</title>
@@ -45,9 +45,9 @@
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link {% if request.path == '/' %}active{% endif %} me-5" href="{% url 'beranda' %}">Beranda</a>
                     <a class="nav-link {% if request.path == '/tentang-kami/' %}active{% endif %} me-5" href="{% url 'tentangkami' %}">Tentang Kami</a>
-                    <a class="nav-link me-5" href="#">Layanan</a>
+                    <a class="nav-link {% if request.path == '/layanan/' %}active{% endif %} me-5" href="{% url 'layanan' %}">Layanan</a>
                     <a class="nav-link me-5" href="#">Blog</a>
-                    <a class="nav-link me-5" href="#">Galeri</a>
+                    <a class="nav-link {% if request.path == '/galeri/' %}active{% endif %} me-5" href="{% url 'galeri' %}">Galeri</a>
                     <a class="nav-link" href="#">Kontak Kami</a>
                     
                 </div>
