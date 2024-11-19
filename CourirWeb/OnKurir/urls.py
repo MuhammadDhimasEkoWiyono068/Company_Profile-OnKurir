@@ -7,8 +7,7 @@ urlpatterns = [
     path('', views.beranda, name='beranda'),
     path('tentang-kami/', views.tentangkami, name='tentangkami'),
     path('layanan/', views.layanan, name='layanan'),
-    path('galeri/', views.galeri, name='galeri'),
-    path('blog/', views.galeri, name='blog_list')
+    path('galeri/', views.galeri, name='galeri')
 ]
 
 if settings.DEBUG:
