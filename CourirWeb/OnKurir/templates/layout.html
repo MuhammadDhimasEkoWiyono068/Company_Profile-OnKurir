@@ -46,7 +46,7 @@
                     <a class="nav-link {% if request.path == '/' %}active{% endif %} me-5" href="{% url 'beranda' %}">Beranda</a>
                     <a class="nav-link {% if request.path == '/tentang-kami/' %}active{% endif %} me-5" href="{% url 'tentangkami' %}">Tentang Kami</a>
                     <a class="nav-link {% if request.path == '/layanan/' %}active{% endif %} me-5" href="{% url 'layanan' %}">Layanan</a>
-                    <a class="nav-link me-5" href="#">Blog</a>
+                    <a class="nav-link {% if request.path == '/blog/' %}active{% endif %} me-5" href="{% url 'blog_list' %}">Blog</a>
                     <a class="nav-link {% if request.path == '/galeri/' %}active{% endif %} me-5" href="{% url 'galeri' %}">Galeri</a>
                     <a class="nav-link" href="#">Kontak Kami</a>
                     

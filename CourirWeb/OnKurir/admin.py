@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import mark_safe
-from .models import Beranda, Carousel, Keunggulan, TentangKami, Tim, Galeri, IsiGaleri, Layanan, IsiLayanan
+from .models import Beranda, Carousel, Keunggulan, TentangKami, Tim, Galeri, IsiGaleri, Layanan, IsiLayanan, Blog
 
 #------------------- Beranda -------------------
 class CarouselInline(admin.TabularInline):
@@ -52,4 +52,5 @@ class GaleriAdmin(admin.ModelAdmin):
 admin.site.register(Beranda, BerandaAdmin)
 admin.site.register(TentangKami, TentangKamiAdmin)
 admin.site.register(Layanan, LayananAdmin)
-admin.site.register(Galeri, GaleriAdmin) 
+admin.site.register(Galeri, GaleriAdmin)
+admin.site.register(Blog)
