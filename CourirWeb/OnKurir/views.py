@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render
-from .models import Beranda, TentangKami, Layanan, Galeri
+from .models import Beranda, TentangKami, Layanan, Galeri, Blog
 
 def beranda(request):
     beranda_data = Beranda.objects.first()  # Ambil data pertama (jika hanya ada satu data)
@@ -32,3 +32,20 @@ def galeri(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'galeri.html', {'galeri': galeri_data, 'page_obj': page_obj})
+
+def blog_list(request):
+    # Get the filter type from the GET parameters
+    filter_type = request.GET.get('filter', 'latest')  # Default filter is 'latest'
+
+    # Fetch the blogs based on the filter
+    if filter_type == 'popular':
+        blogs = Blog.objects.order_by('-views')  # Or '-likes' if you're using likes for popularity
+    else:
+        blogs = Blog.objects.order_by('-date')
+
+    # Pagination
+    paginator = Paginator(blogs, 6)  # Show 6 blogs per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'blog_list.html', {'blogs': page_obj, 'filter': filter_type})
