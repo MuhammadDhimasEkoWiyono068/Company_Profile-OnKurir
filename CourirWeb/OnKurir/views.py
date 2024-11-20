@@ -60,6 +60,14 @@ def blog_detailed(request, blog_id):
     
     form = CommentForm()
 
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.blog = blog  # Link the comment to the current blog
+            comment.save()
+            return redirect('blog_detail', blog_id=blog.id)
+    
     context = {
         'blog': blog,
         'comments': all_comments,
