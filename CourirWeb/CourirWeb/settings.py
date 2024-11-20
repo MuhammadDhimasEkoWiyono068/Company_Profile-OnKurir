@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'OnKurir',
     'django_bootstrap5',
     'markdownx',
+    'location_field.apps.DefaultConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -130,3 +132,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 MARKDOWNX_MEDIA_PATH = 'markdownx/'
+
+LOCATION_FIELD = {
+    'provider.openstreetmap.max_zoom': 18,
+}

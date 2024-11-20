@@ -1,6 +1,7 @@
 from django.db import models
 from markdownx.models import MarkdownxField
 from markdownx.utils import markdownify
+from location_field.models.plain import PlainLocationField
 
 #------------------- Beranda -------------------
 class Beranda(models.Model):
@@ -130,3 +131,26 @@ class FooterMedia(models.Model):
     
     def __str__(self):
         return f"{self.get_media_display()} - {self.link}"
+    
+#---------------KONTAK KAMI-----------------------
+class KontakKami(models.Model):
+    default_value = '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d997.4213765784025!2d117.15692014227886!3d-0.4675028379033951!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2df67f4979f7e3a9%3A0x7b536c8c2029f57f!2sInformatika%20Universitas%20Mulawarman!5e0!3m2!1sen!2sid!4v1732134348068!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
+    banner = models.ImageField(upload_to='KontakKami/banner/')
+    judul = models.CharField(max_length=255)
+    deskripsi = models.TextField()
+    embed_gmap = models.TextField(default=default_value)
+    
+    def __str__(self) -> str:
+        return self.judul
+
+class KontakList(models.Model):
+    logo_choices = {
+        "bi bi-envelope": "E-mail",
+        "bi bi-telephone": "Telp",
+        "bi bi-geo-alt": "Alamat",
+    }
+    logo = models.CharField(max_length=255, choices=logo_choices, unique=True, default='bi bi-envelope')
+    content = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return self.get_logo_display()
