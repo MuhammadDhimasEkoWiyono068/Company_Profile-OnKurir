@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ blog.title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">{{ blog.title }}</h1>
+            <p class="text-muted text-center">
+                <i class="bi bi-calendar"></i> {{ blog.date|date:"d F Y" }}
+                <span class="mx-2">|</span> 
+                <strong>By Admin</strong>
+            </p>
+            {% if blog.image %}
+            <div class="d-flex justify-content-center">
+                <img src="{{ blog.image.url }}" class="card-img img-fluid" alt="{{ blog.title }}" 
+                     style="object-fit: cover;
+                            height: 400px;
+                            max-width: 90%;
+                            border-style: solid;
+                            border-width: 1px;
+                            border-radius: 10px;">
+            </div>
+            {% endif %}                   
+            <div class="card-text mt-5" style="text-align: justify;">
+                {{ blog.body_as_html|safe }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

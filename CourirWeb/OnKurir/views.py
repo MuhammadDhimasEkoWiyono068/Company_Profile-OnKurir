@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Beranda, TentangKami, Layanan, Galeri, Blog
 
 def beranda(request):
@@ -49,3 +49,7 @@ def blog_list(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'blog_list.html', {'blogs': page_obj, 'filter': filter_type})
+
+def blog_detailed(request, pk):
+    blog = get_object_or_404(Blog, pk=pk)
+    return render(request, 'blog_detailed.html', {'blog' : blog})
