@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block title %}Kontak Kami{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<!------------------------------ Banner Kontak Kami ------------------------------>
+<div class="d-flex align-items-center" style="height: 80vh">
+    <img
+      src="{% if data.banner %}{{ data.banner.url }}{% else %}{% static 'images/BannerDefault.png' %}{% endif %}"
+      alt="Banner Kontak Kami"
+      style="width: 100%; height: 100%; object-fit: cover"
+    />
+</div>
+
+<div class="container my-5">
+  <div class="row">
+    <!-- Left Section -->
+    <div class="col-md-6">
+      <h1 class="mb-4">{{ data.judul }}</h1>
+      <p class="mb-4">
+        {{ data.deskripsi }}
+      </p>
+      <ul class="list-unstyled">
+        <!-- Contact Item -->
+        {% for kontak in list %} 
+        <li class="d-flex align-items-center mb-3">
+          <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center me-3" 
+               style="width: 50px; height: 50px; font-size: 20px;">
+            <i class="{{ kontak.logo }}"></i>
+          </div>
+          <div class="row">
+            <strong>{{ kontak.get_logo_display }}</strong>
+            <span>{{ kontak.content }}</span>
+          </div>   
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Right Section -->
+    <div class="col-md-6">
+      {{ data.embed_gmap|safe }}
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

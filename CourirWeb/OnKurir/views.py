@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Beranda, TentangKami, Layanan, Galeri, Blog, FooterMedia
+from .models import Beranda, TentangKami, Layanan, Galeri, Blog, KontakKami, KontakList
 from .forms import CommentForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
@@ -55,6 +55,7 @@ def blog_list(request):
 
 def blog_detailed(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id)
+    blog.views += 1
     all_comments = blog.comments.all().order_by('-created_at')
     
     form = CommentForm()
@@ -65,3 +66,8 @@ def blog_detailed(request, blog_id):
         'form': form,
     }
     return render(request, 'blog_detailed.html', context)
+
+def kontak_kami(request):
+    kontak_kami = KontakKami.objects.first()
+    list_kontak = KontakList.objects.all()
+    return render(request, 'kontak_kami.html', {'data' : kontak_kami, 'list' : list_kontak})

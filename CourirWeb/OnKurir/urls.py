@@ -10,6 +10,7 @@ urlpatterns = [
     path('galeri/', views.galeri, name='galeri'),
     path('blog/', views.blog_list, name='blog_list'),
     path('blog/<int:blog_id>/', views.blog_detailed, name='blog_detail'),
+    path('kontak-kami/', views.kontak_kami, name='kontak-kami')
 ]
 
 if settings.DEBUG:
