@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.db import models
 from django.utils.html import mark_safe
 from markdownx.admin import MarkdownxModelAdmin
-from .models import Beranda, Carousel, Keunggulan, TentangKami, Tim, Galeri, IsiGaleri, Layanan, IsiLayanan, Blog
+from .models import Beranda, Carousel, Keunggulan, TentangKami, Tim, Galeri, IsiGaleri, Layanan, IsiLayanan, Blog, FooterMedia
+from django import forms
 
 #------------------- Beranda -------------------
 class CarouselInline(admin.TabularInline):
@@ -54,8 +55,10 @@ class BlogAdmin(MarkdownxModelAdmin):
     list_display = ('title', 'date')
     
 
+
 admin.site.register(Beranda, BerandaAdmin)
 admin.site.register(TentangKami, TentangKamiAdmin)
 admin.site.register(Layanan, LayananAdmin)
 admin.site.register(Galeri, GaleriAdmin)
 admin.site.register(Blog, BlogAdmin)
+admin.site.register(FooterMedia)

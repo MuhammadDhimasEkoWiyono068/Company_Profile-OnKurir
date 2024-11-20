@@ -105,3 +105,28 @@ class Blog(models.Model):
     
     def body_as_html(self):
         return markdownify(self.body)
+    
+#-------------------- Comment Blog -------------------
+class Comment(models.Model):
+    blog = models.ForeignKey('Blog', on_delete=models.CASCADE, related_name='comments')
+    username = models.CharField(max_length=100)
+    email = models.EmailField()
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comment by {self.username} on {self.blog.title}"
+    
+#--------------------- FOOTER-MEDIA ---------------------------
+class FooterMedia(models.Model):
+    media_choices = {
+        "bi bi-facebook": "FaceBook",
+        "bi bi-youtube": "YouTube",
+        "bi bi-instagram": "Instagram",
+        "bi bi-whatsapp": "Whatsapp",
+    }
+    media = models.CharField(max_length=255, choices=media_choices, unique=True, default="bi bi-facebook")
+    link = models.URLField(max_length=2000)
+    
+    def __str__(self):
+        return f"{self.get_media_display()} - {self.link}"

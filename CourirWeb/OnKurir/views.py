@@ -1,6 +1,9 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404
-from .models import Beranda, TentangKami, Layanan, Galeri, Blog
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Beranda, TentangKami, Layanan, Galeri, Blog, FooterMedia
+from .forms import CommentForm
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 def beranda(request):
     beranda_data = Beranda.objects.first()  # Ambil data pertama (jika hanya ada satu data)
@@ -50,6 +53,15 @@ def blog_list(request):
 
     return render(request, 'blog_list.html', {'blogs': page_obj, 'filter': filter_type})
 
-def blog_detailed(request, pk):
-    blog = get_object_or_404(Blog, pk=pk)
-    return render(request, 'blog_detailed.html', {'blog' : blog})
+def blog_detailed(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    all_comments = blog.comments.all().order_by('-created_at')
+    
+    form = CommentForm()
+
+    context = {
+        'blog': blog,
+        'comments': all_comments,
+        'form': form,
+    }
+    return render(request, 'blog_detailed.html', context)

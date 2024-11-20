@@ -3,6 +3,7 @@
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %} - OnKurir</title>
@@ -133,6 +134,16 @@
                         <h6 class="text-uppercase fw-bold mb-4" style="color: white;">
                             Ikuti Kami
                         </h6>
+                        <div class="d-flex gap-2">
+                            {% for social in medias %}
+                            <a href="{{ social.link }}" target="_blank" class="text-decoration-none">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center bg-light" 
+                                     style="width: 40px; height: 40px; color: #000;">
+                                    <i class="{{ social.media }}"></i>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
                     </div>
                     <!-- Grid column -->
                 </div>
