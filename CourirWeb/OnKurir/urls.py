@@ -8,7 +8,8 @@ urlpatterns = [
     path('tentang-kami/', views.tentangkami, name='tentangkami'),
     path('layanan/', views.layanan, name='layanan'),
     path('galeri/', views.galeri, name='galeri'),
-    path('blog/', views.blog_list, name='blog_list')
+    path('blog/', views.blog_list, name='blog_list'),
+    path('blog/<int:blog_id>/', views.blog_detailed, name='blog_detail'),
 ]
 
 if settings.DEBUG:

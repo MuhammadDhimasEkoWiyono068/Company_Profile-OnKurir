@@ -1,6 +1,9 @@
 from django.contrib import admin
+from django.db import models
 from django.utils.html import mark_safe
-from .models import Beranda, Carousel, Keunggulan, TentangKami, Tim, Galeri, IsiGaleri, Layanan, IsiLayanan, Blog
+from markdownx.admin import MarkdownxModelAdmin
+from .models import Beranda, Carousel, Keunggulan, TentangKami, Tim, Galeri, IsiGaleri, Layanan, IsiLayanan, Blog, FooterMedia
+from django import forms
 
 #------------------- Beranda -------------------
 class CarouselInline(admin.TabularInline):
@@ -47,10 +50,15 @@ class GaleriAdmin(admin.ModelAdmin):
     inlines = [IsiGaleriInline]  # Menambahkan IsiGaleriInline di dalam admin Galeri
     # list_display = ('title_Galeri',)  # Menampilkan title_Galeri di admin list view
 
+#-------------------- Blog --------------------------
+class BlogAdmin(MarkdownxModelAdmin):
+    list_display = ('title', 'date')
+    
 
 
 admin.site.register(Beranda, BerandaAdmin)
 admin.site.register(TentangKami, TentangKamiAdmin)
 admin.site.register(Layanan, LayananAdmin)
 admin.site.register(Galeri, GaleriAdmin)
-admin.site.register(Blog)
+admin.site.register(Blog, BlogAdmin)
+admin.site.register(FooterMedia)
