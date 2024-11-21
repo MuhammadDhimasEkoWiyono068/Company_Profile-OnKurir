@@ -88,21 +88,21 @@
         <p style="font-size: 18px; color: #999999; text-align: center; margin-top: 20px;">Belum ada keunggulan yang tersedia.</p>
     {% endif %} -->
     <!-- List Keunggulan -->
-{% if beranda.keunggulan.exists %}
-{% for keunggulan in beranda.keunggulan.all %}
-    <div class="keunggulan-container" style="margin-top: 10px; width: 99%; height: 150px; background-color: #EEEEEE; text-align: center; border-radius: 10px; display: flex; justify-content: center; align-items: center; padding: 20px; margin-left: auto; margin-right: auto; transition: transform 0.3s ease;">
-        <img src="{% if keunggulan.gambar_keunggulan %}{{ keunggulan.gambar_keunggulan.url }}{% else %}{% static 'images/default.png' %}{% endif %}" 
-             alt="{{ keunggulan.title }}" 
-             style="margin-right: 50px; width: 100px; height: 100px; object-fit: cover; border-radius: 10px; border: 1.5px solid #000000;">
-        <div style="text-align: left;">
-            <strong style="font-size: 24px; color: #00ADB5;">{{ keunggulan.title_Isikeunggulan }}</strong>
-            <p style="font-size: 18px; text-align: justify;">{{ keunggulan.deskripsi_keunggulan|default:"Deskripsi belum tersedia." }}</p>
+    {% if beranda.keunggulan.exists %}
+    {% for keunggulan in beranda.keunggulan.all %}
+        <div class="keunggulan-container" style="margin-top: 10px; width: 99%; height: 150px; background-color: #EEEEEE; text-align: center; border-radius: 10px; display: flex; justify-content: center; align-items: center; padding: 20px; margin-left: auto; margin-right: auto; transition: transform 0.3s ease;">
+            <img src="{% if keunggulan.gambar_keunggulan %}{{ keunggulan.gambar_keunggulan.url }}{% else %}{% static 'images/default.png' %}{% endif %}" 
+                alt="{{ keunggulan.title }}" 
+                style="margin-right: 50px; width: 100px; height: 100px; object-fit: cover; border-radius: 10px; border: 1.5px solid #000000;">
+            <div style="text-align: left;">
+                <strong style="font-size: 24px; color: #00ADB5;">{{ keunggulan.title_Isikeunggulan }}</strong>
+                <p style="font-size: 18px; text-align: justify;">{{ keunggulan.deskripsi_keunggulan|default:"Deskripsi belum tersedia." }}</p>
+            </div>
         </div>
-    </div>
-{% endfor %}
-{% else %}
-<p style="font-size: 18px; color: #999999; text-align: center; margin-top: 20px;">Belum ada keunggulan yang tersedia.</p>
-{% endif %}
+    {% endfor %}
+    {% else %}
+    <p style="font-size: 18px; color: #999999; text-align: center; margin-top: 20px;">Belum ada keunggulan yang tersedia.</p>
+    {% endif %}
 
 
 

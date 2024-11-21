@@ -27,9 +27,10 @@
         {% for kontak in list %} 
         <li class="d-flex align-items-center mb-3">
           <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center me-3" 
-               style="width: 50px; height: 50px; font-size: 20px;">
+              style="width: 50px; height: 50px; font-size: 20px; background-color: #00ADB5 !important;">
             <i class="{{ kontak.logo }}"></i>
           </div>
+
           <div class="row">
             <strong>{{ kontak.get_logo_display }}</strong>
             <span>{{ kontak.content }}</span>
