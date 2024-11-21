@@ -8,7 +8,11 @@ from django.template.loader import render_to_string
 def beranda(request):
     beranda_data = Beranda.objects.first()  # Ambil data pertama (jika hanya ada satu data)
     galeri_data = Galeri.objects.first()  # Ambil data galeri pertama
-    gambar_list = galeri_data.isi_galeri.all()[:4]  # Ambil hanya 4 gambar pertama
+    # gambar_list = galeri_data.isi_galeri.all()[:4]  # Ambil hanya 4 gambar pertama
+    if galeri_data is None:
+        gambar_list = []
+    else:
+        gambar_list = galeri_data.isi_galeri.all()[:4]  # Ambil semua gambar dalam galeri
     return render(request, 'beranda.html', {
         'beranda': beranda_data, 
         'galeri': galeri_data,
@@ -27,7 +31,12 @@ def layanan(request):
 
 def galeri(request):
     galeri_data = Galeri.objects.first()  # Ambil data galeri pertama
-    gambar_list = galeri_data.isi_galeri.all()  # Ambil semua gambar dalam galeri
+    # gambar_list = galeri_data.isi_galeri.all()  # Ambil semua gambar dalam galeri
+    # Jika galeri_data tidak ada, kita tentukan gambar_list sebagai list kosong
+    if galeri_data is None:
+        gambar_list = []
+    else:
+        gambar_list = galeri_data.isi_galeri.all()  # Ambil semua gambar dalam galeri
 
     # Paginasi: Batasi hanya 6 gambar per halaman
     paginator = Paginator(gambar_list, 9)

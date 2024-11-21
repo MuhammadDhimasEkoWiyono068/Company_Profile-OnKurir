@@ -82,13 +82,13 @@
                             Tentang Kami
                         </h6>
                         <p>
-                            <a href="#!" style="color: white;">Profil Perusahaan</a>
+                            <a href="{% url 'tentangkami' %}#title-tentangkami" style="color: white;">{{ footer_TitleTentangKami.title_TentangKami|default:"Belum ada teks untuk judul" }}</a>
                         </p>
                         <p>
-                            <a href="#!" style="color: white;">Visi & Misi</a>
+                            <a href="{% url 'tentangkami' %}#title-visimisi" style="color: white;">{{ footer_TitleVisiMisi.title_VisiMisi|default:"Belum ada teks untuk judul" }}</a>
                         </p>
                         <p>
-                            <a href="#!" style="color: white;">Tim</a>
+                            <a href="{% url 'tentangkami' %}#!" style="color: white;">{{ footer_Tim.title_tim|default:"Belum ada teks untuk judul" }}</a>
                         </p>
                     </div>
                     <!-- Grid column -->
@@ -100,10 +100,10 @@
                             Media
                         </h6>
                         <p>
-                            <a href="#!" style="color: white;">Blog</a>
+                            <a href="{% url 'blog_list' %}#title-blog" style="color: white;">Blog</a>
                         </p>
                         <p>
-                            <a href="#!" style="color: white;">Galeri</a>
+                            <a href="{% url 'galeri' %}#title-galeri" style="color: white;">{{ footer_Galeri.title_Galeri|default:"Belum ada teks untuk judul" }}</a>
                         </p>
                     </div>
                     <!-- Grid column -->
@@ -115,16 +115,13 @@
                             Hubungi Kami
                         </h6>
                         <p>
-                            <a href="#!" style="color: white;">Alamat</a>
+                            <a href="{% url 'kontak-kami' %}#title-kontakkami" style="color: white;">Alamat</a>
                         </p>
                         <p>
-                            <a href="#!" style="color: white;">No. Telp</a>
+                            <a href="{% url 'kontak-kami' %}#title-kontakkami" style="color: white;">No. Telp</a>
                         </p>
                         <p>
-                            <a href="#!" style="color: white;">Email</a>
-                        </p>
-                        <p>
-                            <a href="#!" style="color: white;">Jam Operasional</a>
+                            <a href="{% url 'kontak-kami' %}#title-kontakkami" style="color: white;">Email</a>
                         </p>
                     </div>
                     <!-- Grid column -->

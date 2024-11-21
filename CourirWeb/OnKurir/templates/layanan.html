@@ -52,7 +52,7 @@
 <!-- List Isi Layanan -->
  <a href="#title-carakerja" class="text-decoration-none">
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 justify-content-center" 
-     style="display: flex; flex-wrap: wrap;">
+     style="display: flex; flex-wrap: wrap; gap: 80px;">
     {% if layanan.isi_layanan.exists %}
         {% for isi in layanan.isi_layanan.all %}
         <div class="col mb-4 layanan-item mx-2" 

@@ -4,17 +4,57 @@
 
 {% block content %}
 {% load static %}
+
+<style>
+    /* Mengubah warna teks pagination */
+    .custom-pagination .page-item .page-link {
+      color: #00ADB5; /* Warna teks tombol pagination */
+      background-color: #ffffff; /* Warna latar belakang tombol */
+      border-color: #00ADB5; /* Warna border tombol */
+    }
+  
+    .custom-pagination .page-item.active .page-link {
+      background-color: #00ADB5; /* Warna latar belakang untuk tombol aktif */
+      color: #ffffff; /* Warna teks untuk tombol aktif */
+    }
+  
+    .custom-pagination .page-item.disabled .page-link {
+      color: #999999; /* Warna teks untuk tombol yang dinonaktifkan */
+      background-color: #f8f9fa; /* Warna latar belakang untuk tombol yang dinonaktifkan */
+      border-color: #ddd; /* Warna border untuk tombol yang dinonaktifkan */
+    }
+
+    .btn-primary {
+        background-color: #00ADB5; /* Warna latar belakang yang diinginkan */
+        border-color: #00ADB5; /* Warna border yang diinginkan */
+    }
+
+    .btn-primary:hover {
+        background-color: #00ADB5; /* Warna latar belakang saat hover */
+        border-color: #00ADB5; /* Warna border saat hover */
+    }
+
+    .btn-secondary {
+        background-color: #6c757d; /* Warna latar belakang tombol yang tidak dipilih */
+        border-color: #6c757d; /* Warna border tombol yang tidak dipilih */
+    }
+
+  </style>
+
 <body class="bg-light">
     <div class="container mb-5">
         <div class="text-center my-5">
-            <h1>Blog</h1>
+            <h1 id="title-blog">Blog</h1>
             <p>Temukan berita terkini seputar layanan kami, peningkatan teknologi, dan cabang baru, semuanya untuk memberikan pengalaman terbaik bagi Anda.</p>
         </div>
 
         <!-- Filter Buttons -->
         <div class="d-flex justify-content-end mb-3">
+            <!-- <a href="?filter=popular" class="btn {% if filter == 'popular' %}btn-primary{% else %}btn-secondary{% endif %} me-2">Populer</a>
+            <a href="?filter=latest" class="btn {% if filter == 'latest' %}btn-primary{% else %}btn-secondary{% endif %}">Terkini</a> -->
             <a href="?filter=popular" class="btn {% if filter == 'popular' %}btn-primary{% else %}btn-secondary{% endif %} me-2">Populer</a>
             <a href="?filter=latest" class="btn {% if filter == 'latest' %}btn-primary{% else %}btn-secondary{% endif %}">Terkini</a>
+
         </div>
 
         <div class="row row-cols-1 row-cols-md-3 g-4" id="blog-list">
@@ -45,47 +85,48 @@
         </div>
 
         <!-- Pagination Controls -->
-        <div class="d-flex justify-content-center mt-4">
-            <nav aria-label="Blog Pagination">
-                <ul class="pagination">
-                    {% if blogs.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" href="?filter={{ filter }}&page={{ blogs.previous_page_number }}" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <span class="page-link">&laquo;</span>
-                        </li>
-                    {% endif %}
+        <!-- Pagination Controls -->
+<div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Blog Pagination">
+        <ul class="pagination justify-content-center custom-pagination">
+            {% if blogs.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?filter={{ filter }}&page={{ blogs.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">&laquo;</span>
+                </li>
+            {% endif %}
 
-                    {% for num in blogs.paginator.page_range %}
-                        {% if blogs.number == num %}
-                            <li class="page-item active">
-                                <span class="page-link">{{ num }}</span>
-                            </li>
-                        {% else %}
-                            <li class="page-item">
-                                <a class="page-link" href="?filter={{ filter }}&page={{ num }}">{{ num }}</a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
+            {% for num in blogs.paginator.page_range %}
+                {% if blogs.number == num %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?filter={{ filter }}&page={{ num }}">{{ num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
 
-                    {% if blogs.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?filter={{ filter }}&page={{ blogs.next_page_number }}" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <span class="page-link">&raquo;</span>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </div>
+            {% if blogs.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?filter={{ filter }}&page={{ blogs.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">&raquo;</span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
     </div>
 </body>
 {% endblock %}
