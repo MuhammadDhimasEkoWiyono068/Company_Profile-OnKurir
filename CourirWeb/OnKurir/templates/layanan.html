@@ -51,7 +51,7 @@
 
 <!-- List Isi Layanan -->
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 justify-content-center" 
-     style="display: flex; flex-wrap: wrap; gap: 70px;">
+     style="display: flex; flex-wrap: wrap; gap: 120px;">
     {% if layanan.isi_layanan.exists %}
         {% for isi in layanan.isi_layanan.all %}
         <div class="col mb-4 layanan-item" 
@@ -84,7 +84,7 @@
 </div>
 
 <div class="d-flex flex-column justify-content-center align-items-center">
-    <p id="title-carakerja" style="color: rgb(25, 19, 19); font-size: 32px; font-weight: bold; margin-top: 100px; margin-bottom: 40px;">
+    <p id="title-carakerja" style="color: rgb(25, 19, 19); font-size: 32px; font-weight: bold; margin-top: 100px;">
         {{ layanan.title_carakerja|default:"Belum ada teks untuk judul" }}
     </p>
 </div>

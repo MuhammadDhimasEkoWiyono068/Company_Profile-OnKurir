@@ -5,10 +5,10 @@
 
 <!------------------------------ Banner Slider ------------------------------>
 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner" style="width: 100%; height: 650px;">
+    <div class="carousel-inner" style="width: 100%; height: 700px;">
         {% for banner in beranda.carousel.all %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <img src="{{ banner.banner_beranda.url }}" class="d-block w-100" alt="Carousel Image" style="object-fit: cover; height: 650px;">
+            <img src="{{ banner.banner_beranda.url }}" class="d-block w-100" alt="Carousel Image" style="object-fit: cover; height: 700px;">
         </div>
         {% endfor %}
     </div>

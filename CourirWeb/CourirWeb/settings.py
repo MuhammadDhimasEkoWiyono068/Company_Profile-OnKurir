@@ -136,3 +136,6 @@ MARKDOWNX_MEDIA_PATH = 'markdownx/'
 LOCATION_FIELD = {
     'provider.openstreetmap.max_zoom': 18,
 }
+
+TIME_ZONE = 'Asia/Makassar'  # GMT+8
+USE_TZ = True
