@@ -50,11 +50,12 @@
 </div>
 
 <!-- List Isi Layanan -->
+ <a href="#title-carakerja" class="text-decoration-none">
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 justify-content-center" 
-     style="display: flex; flex-wrap: wrap; gap: 120px;">
+     style="display: flex; flex-wrap: wrap;">
     {% if layanan.isi_layanan.exists %}
         {% for isi in layanan.isi_layanan.all %}
-        <div class="col mb-4 layanan-item" 
+        <div class="col mb-4 layanan-item mx-2" 
              data-jenis-layanan="{{ isi.Jenis_layanan }}" 
              data-proses-pengiriman="{{ isi.proses_pengiriman }}"
              data-kebijakan-ketentuan="{{ isi.kebijakan_ketentuan }}"
@@ -67,7 +68,7 @@
                 <p style="font-size: 20px; font-weight: bold; margin-bottom: 5px; text-align: center; color: #00ADB5;">
                     {{ isi.Jenis_layanan }}
                 </p>
-                <p style="font-size: 14px; text-align: justify;">
+                <p style="font-size: 14px; text-align: justify; color: #000000;">
                     {{ isi.deskripsi_layanan }}
                 </p>
             </div>
@@ -82,6 +83,7 @@
         </div>
     {% endif %}
 </div>
+</a>
 
 <div class="d-flex flex-column justify-content-center align-items-center">
     <p id="title-carakerja" style="color: rgb(25, 19, 19); font-size: 32px; font-weight: bold; margin-top: 100px;">
